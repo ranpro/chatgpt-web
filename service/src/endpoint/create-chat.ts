@@ -32,7 +32,7 @@ export default async (req, res) => {
 
     const { data: { detail: { usage: { total_tokens } } } } = response as Response
 
-    req.user.tokens_count = (req.user.tokens ?? 0) + total_tokens
+    req.user.tokens_count = (req.user.tokens_count ?? 0) + total_tokens
     await req.user.save()
   }
   catch (error) {
