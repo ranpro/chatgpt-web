@@ -16,27 +16,23 @@ const authStore = useAuthStore()
 const ms = useMessage()
 
 const loading = ref(false)
-const token = ref('')
+const phone = ref('')
+const password = ref('')
 
-const disabled = computed(() => !token.value.trim() || loading.value)
+const disabled = computed(() => !password.value.trim() || loading.value)
 
 async function handleVerify() {
-  const secretKey = token.value.trim()
-
-  if (!secretKey)
-    return
-
   try {
     loading.value = true
-    await fetchVerify(secretKey)
-    authStore.setToken(secretKey)
+    const data = await fetchVerify(phone.value, password.value)
+    authStore.setToken(data.data.token)
     ms.success('success')
     window.location.reload()
   }
   catch (error: any) {
     ms.error(error.message ?? 'error')
     authStore.removeToken()
-    token.value = ''
+    password.value = ''
   }
   finally {
     loading.value = false
@@ -64,7 +60,18 @@ function handlePress(event: KeyboardEvent) {
           </p>
           <Icon403 class="w-[200px] m-auto" />
         </header>
-        <NInput v-model:value="token" type="password" placeholder="" @keypress="handlePress" />
+        <div>
+          <div class="mb-2 text-base italic font-medium">
+            手机号
+          </div>
+          <NInput v-model:value="phone" placeholder="请输入手机号" @keypress="handlePress" />
+        </div>
+        <div>
+          <div class="mb-2 text-base italic font-medium">
+            密码
+          </div>
+          <NInput v-model:value="password" type="password" placeholder="请输入密码" @keypress="handlePress" />
+        </div>
         <NButton
           block
           type="primary"

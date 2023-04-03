@@ -32,8 +32,12 @@
     "express-rate-limit": "^6.7.0",
     "https-proxy-agent": "^5.0.1",
     "isomorphic-fetch": "^3.0.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.0.3",
     "node-fetch": "^3.3.0",
-    "socks-proxy-agent": "^7.0.0"
+    "nodemon": "^2.0.22",
+    "socks-proxy-agent": "^7.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.3",
