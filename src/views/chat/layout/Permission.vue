@@ -21,10 +21,17 @@ const password = ref('')
 
 const disabled = computed(() => !password.value.trim() || loading.value)
 
+interface VerifyResponse {
+  data: {
+    token: string
+  }
+}
+
 async function handleVerify() {
   try {
     loading.value = true
-    const data = await fetchVerify(phone.value, password.value)
+    const { data } = await fetchVerify<VerifyResponse>(phone.value, password.value)
+
     authStore.setToken(data.data.token)
     ms.success('success')
     window.location.reload()
