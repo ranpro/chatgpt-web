@@ -7,7 +7,9 @@ export default async (req, res) => {
 
   try {
     const { prompt, options = {}, systemMessage } = req.body as RequestProps
+
     let firstChunk = true
+
     const response = await chatReplyProcess({
       message: prompt,
       lastContext: options,
