@@ -111,8 +111,6 @@ async function chatReplyProcess(options: RequestOptions) {
       },
     })
 
-		console.log(response)
-
     return sendResponse({ type: 'Success', data: response })
   }
   catch (error: any) {

@@ -9,6 +9,11 @@ const schema = new Schema({
     required: false,
     type: String,
   },
+  tokens_count: {
+    required: false,
+    default: 0,
+    type: Number,
+  },
   expired_at: {
     required: false,
     type: Date,

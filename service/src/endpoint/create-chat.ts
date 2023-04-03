@@ -2,6 +2,16 @@ import type { ChatMessage } from '../chatgpt'
 import { chatReplyProcess } from '../chatgpt'
 import type { RequestProps } from '../types'
 
+interface Response {
+  data: {
+    detail: {
+      usage: {
+        total_tokens: number
+      }
+    }
+  }
+}
+
 export default async (req, res) => {
   res.setHeader('Content-type', 'application/octet-stream')
 
@@ -20,7 +30,10 @@ export default async (req, res) => {
       systemMessage,
     })
 
-    global.console.log(response)
+    const { data: { detail: { usage: { total_tokens } } } } = response as Response
+
+    req.user.tokens_count = (req.user.tokens ?? 0) + total_tokens
+    await req.user.save()
   }
   catch (error) {
     res.write(JSON.stringify(error))
