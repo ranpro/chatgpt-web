@@ -32,8 +32,10 @@ export default async (req, res) => {
 
     const { data: { detail: { usage: { total_tokens } } } } = response as Response
 
+		global.console.log(response, total_tokens)
+
     req.user.tokens_count = (req.user.tokens_count ?? 0) + total_tokens
-    await req.user.save()
+    global.console.log(await req.user.save())
   }
   catch (error) {
     res.write(JSON.stringify(error))
